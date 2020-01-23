@@ -1,7 +1,7 @@
 const path=require('path');
 
 const express=require('express');
-const bodyParser=require('body-parser');
+// const bodyParser=require('body-parser');
 const session=require('express-session');
 const mongoose=require('mongoose');
 
@@ -13,7 +13,8 @@ app.set('views', 'views');
 
 const authRoutes = require('./routes/auth');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
     session({
@@ -35,10 +36,13 @@ app.use(
       .catch(err => console.log(err));
   });
   
-app.use(authRoutes);
+app.use('/auth',authRoutes);
 
 mongoose.connect(
-  'mongodb+srv://shwetagurnani:shweta@cluster0-rvik9.mongodb.net/test?retryWrites=true&w=majority'
+  'mongodb+srv://shwetagurnani:shweta@cluster0-rvik9.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+  }
 )
 .then(result =>{
   console.log("Successfully connected");

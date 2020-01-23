@@ -9,15 +9,15 @@ const userSchema = new Schema({
   },
   age: {
     type: Number,
-    required: true
+    required: false
   },
   gender: {
     type: String,
-    required: true
+    required: false
   },
   phone: {
     type: Number,
-    required: true
+    required: false
   },
   email: {
     type: String,
@@ -25,7 +25,7 @@ const userSchema = new Schema({
   },
   address: {
     type: String,
-    required: true
+    required: false
   },
   password:{
     type:String,
