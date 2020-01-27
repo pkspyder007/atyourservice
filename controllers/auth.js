@@ -1,109 +1,109 @@
-const User=require('../models/user');
+const User = require('../models/user');
 const JWT = require('jsonwebtoken');
 const jwtSecret = 'supersecret';
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 
-exports.postRegister=(req,res)=>{
+exports.postRegister = (req, res) => {
     bcrypt.hash(req.body.password, salt)
         .then(hash => {
-            
-            const {name, email} = req.body;
 
+            console.log(req.body)
             let newUser = {
-                name,
-                email,
+                name: req.body.name,
+                email: req.body.email,
                 password: hash
             }
+            console.log(newUser)
 
-            User.find({email})
+            User.find({ email: req.body.email })
                 .then(users => {
-                    if(users.length < 1) {
+                    if (users.length < 1) {
                         User.create(newUser)
-                        .then(user => {
-                            const token = JWT.sign({
-                                userID:user._id,
-                                name:user.name,
-                                email:user.email
-                            }, jwtSecret, { expiresIn: '1h' });
-        
-                            res.json({
-                                success:true,
-                                accessToken: token
+                            .then(user => {
+                                const token = JWT.sign({
+                                    userID: user._id,
+                                    name: user.name,
+                                    email: user.email
+                                }, jwtSecret, { expiresIn: '1h' });
+
+                                res.json({
+                                    success: true,
+                                    accessToken: token
+                                })
+
                             })
-        
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            res.json({success:false})
-                        })
+                            .catch(err => {
+                                console.log(err);
+                                res.json({ success: false })
+                            })
                     } else {
                         res.json({
-                            success:false,
+                            success: false,
                             message: 'Email already exists.'
                         })
                     }
                 })
-           
+
 
         }).catch(err => {
             console.log(err);
-            res.json({success:false})
+            res.json({ success: false })
         });
 };
 
 
-exports.postLogin=(req,res)=>{
-    User.find({email: req.body.email})
-        .then(users => { 
-            let user = users[0];
-            bcrypt.hash(req.body.password, salt)
+exports.postLogin = (req, res) => {
+
+    User.findOne({ email: req.body.email })
+        .then(user => {
+            bcrypt.compare(req.body.password, user.password)
                 .then(hash => {
-                    if(user.password == hash){console.log('kkk')
+                    if (hash) {
                         const token = JWT.sign({
-                            userID:user._id,
-                            name:user.name,
-                            email:user.email
+                            userID: user._id,
+                            name: user.name,
+                            email: user.email
                         }, jwtSecret, { expiresIn: '1h' });
-    
+
                         res.json({
-                            success:true,
+                            success: true,
                             accessToken: token
                         });
                     } else {
-                        res.json({success:false});
+                        res.json({ success: false });
                     }
                 })
                 .catch(err => {
                     console.log(err);
-                    res.json({success:false});
+                    res.json({ success: false });
                 })
         })
         .catch(err => {
             console.log(err);
-            res.json({success:false})
+            res.json({ success: false })
         })
-        
+
 };
 
-exports.verifyToken = (req,res) => {
-    const decoded = JWT.verify(req.body.token, jwtSecret, 
-        function(err, decoded) {
+exports.verifyToken = (req, res) => {
+    const decoded = JWT.verify(req.body.token, jwtSecret,
+        function (err, decoded) {
             if (err) {
-              /*
-                err = {
-                  name: 'TokenExpiredError',
-                  message: 'jwt expired',
-                  expiredAt: 1408621000
-                }
-              */
-             res.json({
-                 success:false,
-                 message: "Invalid or Expired Token"
-             });
+                /*
+                  err = {
+                    name: 'TokenExpiredError',
+                    message: 'jwt expired',
+                    expiredAt: 1408621000
+                  }
+                */
+                res.json({
+                    success: false,
+                    message: "Invalid or Expired Token"
+                });
             } else {
                 res.json({
-                    success:true,
+                    success: true,
                     message: "Token is valid"
                 });
             }
