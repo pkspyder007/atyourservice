@@ -14,6 +14,7 @@ app.set('views', 'views');
 app.use(cors());
 
 const authRoutes = require('./routes/auth');
+const gigRoutes = require('./routes/gigs');
 
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
@@ -26,19 +27,20 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  if (!req.session.user) {
-    return next();
-  }
-  User.findById(req.session.user._id)
-    .then(user => {
-      req.user = user;
-      next();
-    })
-    .catch(err => console.log(err));
-});
+// app.use((req, res, next) => {
+//   if (!req.session.user) {
+//     return next();
+//   }
+//   User.findById(req.session.user._id)
+//     .then(user => {
+//       req.user = user;
+//       next();
+//     })
+//     .catch(err => console.log(err));
+// });
 
 app.use('/auth', authRoutes);
+app.use('/gigs', gigRoutes);
 
 
 app.get('/', (req, res) => {
@@ -56,5 +58,5 @@ mongoose.connect(
     app.listen(3000);
   })
   .catch(err => {
-    console.log("err");
+    console.log("could not listen to 3000");
   });

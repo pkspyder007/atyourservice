@@ -3,26 +3,30 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const postGigSchema = new Schema({
-  Title: {
+  title: {
     type: String,
     required: true
   },
-  Description: {
+  desc: {
     type: String,
     required: true
   },
-  Offer: {
+  offer: {
     type: Number,
     required: true
   },
-  Deadline: {
+  deadline: {
     type: Date,
     required: true
   },
-  Negotiable: {
+  negotiable: {
     type: Boolean,
     required: true
-}
+  },
+  done: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = mongoose.model('postGig', postGigSchema);

@@ -68,7 +68,8 @@ exports.postLogin = (req, res) => {
 
                         res.json({
                             success: true,
-                            accessToken: token
+                            accessToken: token,
+                            userID: user._id
                         });
                     } else {
                         res.json({ success: false });
