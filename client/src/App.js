@@ -1,6 +1,7 @@
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
 import Header from "./Components/header";
+import Logout from "./Components/Logout";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
@@ -15,6 +16,7 @@ function App() {
       <HashRouter basename="/">
         <Route path="/" component={Home} exact />
         <Route path="/login" component={Login} exact />
+        <Route path="/logout" component={Logout} exact />
         <Route path="/signup" component={Signup} exact />
         <Route path="/gigs" component={Gigs} exact />
         <Route path="/postgig" component={PostGig} exact />

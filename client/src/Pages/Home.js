@@ -18,12 +18,18 @@ function Home() {
       <Link to="/postgig">Post A Gig</Link>
       <h3>Want to work? Look here:</h3>
       <Link to="/gigs">View Gigs</Link>
+
+
       <Link to="/signup" id="left_hover">
         Sign Up
       </Link>
       <Link to="/login" id="right_hover">
         Log In
-      </Link>
+       </Link>
+
+
+      {localStorage.getItem('token') === '' ? '' : <Link to='/logout'>Logout</Link>}
+
     </section>
   );
 }
