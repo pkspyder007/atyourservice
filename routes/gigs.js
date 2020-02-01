@@ -7,6 +7,7 @@ router.get('/allGigs', gigsController.getAll);
 router.post('/getOne', gigsController.getOne);
 router.post('/acceptGig/:id', gigsController.acceptGig);
 router.delete('/deleteOne/:id',gigsController.deleteOneGig);
+router.get('/userGigs',gigsController.displayUserGigs);
 
 
 module.exports = router;
