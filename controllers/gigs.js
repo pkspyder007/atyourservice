@@ -74,3 +74,14 @@ exports.deleteOneGig = (req,res) => {
     })
 }
 
+exports.displayUserGigs = (req,res) => {
+  Gig.find({userId:req.userId})
+  .then(gigs => {
+    res.json({ success: true, gigs })
+  })
+  .catch(err => {
+    console.log(err);
+    res.json({ success: false })
+  })
+}
+
