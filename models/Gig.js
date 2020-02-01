@@ -8,9 +8,13 @@ const GigSchema = new Schema({
     required: true
   },
   userTid: {
-    type: Schema.Types.ObjectId,
-    required: true
+    type: Array,
+    default: []
   },
+  gidID: {
+    type: String,
+    required:true
+  }
 });
 
 module.exports = mongoose.model('Gig', GigSchema);
