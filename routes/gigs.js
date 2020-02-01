@@ -5,6 +5,8 @@ const gigsController = require('../controllers/gigs');
 router.post('/add', gigsController.add);
 router.get('/allGigs', gigsController.getAll);
 router.post('/getOne', gigsController.getOne);
+router.post('/acceptGig/:id', gigsController.acceptGig);
+router.delete('/deleteOne/:id',gigsController.deleteOneGig);
 
 
 module.exports = router;
