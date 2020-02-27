@@ -7,7 +7,7 @@ run npm install
 cd to client
 run npm install or yarn install
 
-# how to rum 
+# how to run 
 first run node app to run server
-then cd to client and run yarn start or npm run start
-you should start the server fisrt as it uses port 3000 same a create react app.
+then cd to client and run yarn start or npm start
+you should start the server first as it uses port 3000 same as create react app.
