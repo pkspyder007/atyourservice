@@ -55,44 +55,44 @@ exports.getOne = (req, res) => {
 //        console.log(err);
 //       res.json({ success: false })
 //      })
-  
+
 //   })
 // }
 
-exports.acceptGig = (req, res ) => {
-  alotGig.findOne({gidID: req.body.gigID})
+exports.acceptGig = (req, res) => {
+  alotGig.findOne({ gidID: req.body.gigID })
     .then(gig => {
-      if(gig){
+      if (gig) {
         let newUsers = gig.userTid;
         newUsers.push(req.body.userId);
         gig.UserTid = newUsers;
         alotGig.findByIdAndUpdate(gig)
-                .then(newGig => {
-                  res.json({success: true})
-                })
-                .catch(err => {
-                  console.log(err)
-                  res.json({success:false});
-                })
+          .then(newGig => {
+            res.json({ success: true })
+          })
+          .catch(err => {
+            console.log(err)
+            res.json({ success: false });
+          })
       } else {
         alotGig.create(req.body)
           .then(newGig => {
-            res.json({success: true})
+            res.json({ success: true })
           })
           .catch(err => {
             console.log(err);
-            res.json({success: false})
+            res.json({ success: false })
           })
       }
     })
 }
 
-exports.deleteOneGig = (req,res) => {
+exports.deleteOneGig = (req, res) => {
   Gig.findByIdAndRemove(req.params.id)
     .then(gig => {
-      if(!gig) {
+      if (!gig) {
         return res.status(404).json({
-          message:"not Found"
+          message: "not Found"
         });
       }
       res.json({ success: true })
@@ -101,16 +101,5 @@ exports.deleteOneGig = (req,res) => {
       console.log(err);
       res.json({ success: false })
     })
-}
-
-exports.displayUserGigs = (req,res) => {
-  Gig.find({userId:req.userId})
-  .then(gigs => {
-    res.json({ success: true, gigs })
-  })
-  .catch(err => {
-    console.log(err);
-    res.json({ success: false })
-  })
 }
 

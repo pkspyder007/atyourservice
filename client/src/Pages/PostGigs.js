@@ -29,13 +29,17 @@ class PostGig extends React.Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
+
+    let userId = localStorage.getItem('userID');
+    console.log(userId)
+
     const { title, desc, offer, deadline, negotiable } = this.state;
     if (!title || !desc || !offer || !deadline) {
       this.setState({ err: 'Please check your inputs' });
       return;
     }
 
-    let userID = localStorage.getItem('userID');
+    
     axios
       .post("/gigs/add", {
         title,
@@ -43,7 +47,7 @@ class PostGig extends React.Component {
         offer,
         deadline,
         negotiable,
-        userID
+        userId
       })
       .then(res => {
         this.props.history.push('/')
